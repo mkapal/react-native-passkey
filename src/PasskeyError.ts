@@ -1,69 +1,89 @@
-export interface PasskeyError {
+interface PasskeyErrorTemplate {
   error: string;
   message: string;
 }
 
-export const UnknownError: PasskeyError = {
+export const UnknownError = {
   error: 'Unknown error',
   message: 'An unknown error occurred',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const NotSupportedError: PasskeyError = {
+export const NotSupportedError = {
   error: 'NotSupported',
   message:
     'Passkeys are not supported on this device. iOS 15 or Android SDK 28 and above is required to use Passkeys',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const RequestFailedError: PasskeyError = {
+export const RequestFailedError = {
   error: 'RequestFailed',
   message: 'The request failed. No Credentials were returned.',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const UserCancelledError: PasskeyError = {
+export const UserCancelledError = {
   error: 'UserCancelled',
   message: 'The user cancelled the request.',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const InvalidChallengeError: PasskeyError = {
+export const InvalidChallengeError = {
   error: 'InvalidChallenge',
   message: 'The provided challenge was invalid',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const InvalidUserIdError: PasskeyError = {
+export const InvalidUserIdError = {
   error: 'InvalidUserId',
   message: 'The provided userId was invalid',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const BadConfiguration: PasskeyError = {
+export const BadConfiguration = {
   error: 'BadConfiguration',
   message: 'Your app is not properly configured. Refer to the docs for help.',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const NoCredentialsError: PasskeyError = {
+export const NoCredentialsError = {
   error: 'NoCredentials',
   message: 'No viable credential is available for the user.',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const InterruptedError: PasskeyError = {
+export const InterruptedError = {
   error: 'Interrupted',
   message: 'The operation was interrupted and may be retried.',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const TimeoutError: PasskeyError = {
+export const TimeoutError = {
   error: 'TimedOut',
   message: 'The operation timed out.',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const CredentialAlreadyExistsError: PasskeyError = {
+export const CredentialAlreadyExistsError = {
   error: 'CredentialAlreadyExists',
   message: 'A passkey for this account already exists on this device.',
-};
+} as const satisfies PasskeyErrorTemplate;
 
-export const NoCreateOptionError: PasskeyError = {
+export const NoCreateOptionError = {
   error: 'NoCreateOption',
   message:
     'No credential provider is available to create a passkey on this device.',
-};
+} as const satisfies PasskeyErrorTemplate;
+
+interface NativeError {
+  error: 'Native error';
+  message: string;
+}
+
+export type PasskeyError =
+  | typeof UnknownError
+  | typeof NotSupportedError
+  | typeof RequestFailedError
+  | typeof UserCancelledError
+  | typeof InvalidChallengeError
+  | typeof InvalidUserIdError
+  | typeof BadConfiguration
+  | typeof NoCredentialsError
+  | typeof InterruptedError
+  | typeof TimeoutError
+  | typeof CredentialAlreadyExistsError
+  | typeof NoCreateOptionError
+  | NativeError;
 
 export const NativeError = (
   message = 'An unknown error occurred'
